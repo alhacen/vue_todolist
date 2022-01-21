@@ -16,16 +16,9 @@ export default {
   },
   methods: {
     addToList(data){
-      if(this.isEditing){
-        this.allTodos[this.editingIndex] = data
-        this.allTodos = [...this.allTodos]
-        this.isEditing = false
-        this.defaultText = ''
-        this.editingIndex = -1
-        console.log(this.allTodos)
-      }else{
+        if(!data || this.allTodos.includes(data))
+          return
         this.allTodos.push(data)
-      }
     },
 
     handleModify(index){

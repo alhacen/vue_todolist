@@ -17,16 +17,9 @@ export default {
         required: true,
         type: Function,
     },
-    isEditing:{
-        type: Boolean,
-        default: false
-    }
   },
-  watch:{
-      defaultText(){
-          this.todoText = this.defaultText
-      }
-  },
+
+
   created (){
       this.todoText = this.defaultText
   },
