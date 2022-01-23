@@ -1,16 +1,26 @@
 <template>
   <div id="app">
+    <!-- <Tmp :name="hassan" @saymyname="increment"/> -->
     <Todo />
   </div>
 </template>
 
 <script>
 import Todo from './components/todo'
+// import Tmp from './tmp.vue'
+
 
 export default {
   name: 'App',
   components: {
+    // Tmp,
     Todo
+  },
+  data: ()=>({
+    hassan: 'ahmad',
+  }),
+  methods:{
+
   }
 }
 </script>

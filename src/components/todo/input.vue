@@ -8,30 +8,13 @@
 <script>
 export default {
   name: 'Input',
-  props: {
-    defaultText: {
-        type: String,
-        default: ''
-    },
-    addToList: {
-        required: true,
-        type: Function,
-    },
-  },
-
-
-  created (){
-      this.todoText = this.defaultText
-  },
-  data:()=>{
-      return {
-          todoText: ''
-      }
-  },
+  data:()=>({
+      todoText: ''
+  }),
   methods:{
       handleAdd(todoText){
           this.todoText = ''
-          this.addToList(todoText)
+          this.$store.commit('add', todoText)
       },
 
   }

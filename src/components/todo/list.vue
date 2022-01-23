@@ -1,9 +1,10 @@
 <template>
     <div style="display:flex;justify-content:center;flex-direction:column; align-items:center;padding: 24px; gap:8px">
-        <div style="display:flex; justify-content:space-between; width:300px" v-for="(todo,index) in allTodos" :key="todo">
-            <div :contenteditable="editingIndex===index" v-model="temp"  :style="{padding:'8px 4px 8px 4px', border:editingIndex===index?'1px solid black':'', width:'100%', textAlign:'left'}" >
+        <div style="display:flex; justify-content:space-between; width:300px" v-for="(todo, index) in todos" :key="todo">
+            <div v-if="editingIndex!==index"  :style="{padding:'8px 4px 8px 4px', border:editingIndex===index?'1px solid black':'', width:'100%', textAlign:'left'}" >
                 {{todo}}
             </div>
+            <input v-else v-model="temp" style="padding: 8px 4px 8px 4px"/>
             <div style="display:flex; gap:12px">
                 <button class="deleteBtn" @click="deleteTodo(index)">
                     delete
@@ -12,37 +13,35 @@
                     {{editingIndex===index?'Save':'edit'}}
                 </button>
             </div>
-        </div>
+        </div>        
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'List',
-    props: {
-        allTodos:{
-            required: true,
-            type: Array,
-        },
+    computed:{
+        ...mapState(['todos'])
     },
-    data:()=>{
-        return{
-            editingIndex: -1,
-            temp: ''
-        }
-    },
-    methods: {
-        deleteTodo(index){
-            this.allTodos.splice(index, 1)
-        },
-        handleModify(index){
-            if(this.editingIndex!==-1){
-                this.allTodos[index] = this.temp
-                this.temp=''
-                this.editingIndex = -1
+    data:()=>({
+        temp: '',
+        editingIndex: -1
+    }),
+    methods:{
+        handleModify(i){
+            if(this.editingIndex !==-1){
+                this.$store.commit('update', {
+                    i,
+                    newState: this.temp
+                })
+                this.editingIndex=-1
             }else{
-                this.editingIndex=index
-                this.temp = this.allTodos[index]
+                this.editingIndex=i
+                this.temp = this.todos[i]
             }
+        },
+        deleteTodo(i){
+            this.$store.commit('delete', i)
         }
     }
 }
