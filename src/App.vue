@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <!-- <Tmp :name="hassan" @saymyname="increment"/> -->
-    <Todo />
+    <!-- <Todo /> -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Todo from './components/todo'
+// import Todo from './components/todo'
 // import Tmp from './tmp.vue'
 
 
@@ -14,7 +15,7 @@ export default {
   name: 'App',
   components: {
     // Tmp,
-    Todo
+    // Todo
   },
   data: ()=>({
     hassan: 'ahmad',
