@@ -1,7 +1,7 @@
 <template>
-    <div style="display: flex; gap:5px; justify-content:center">
-        <input class="todoInput" v-model="todoText" type="text" />
-        <button class="addBtn" @click="handleAdd(todoText)">Add</button>
+    <div class="todo__inputCol">
+        <input class="todo__input" v-model="todoText" type="text" />
+        <button  class="todo__btn todo__btn--add" @click="handleAdd(todoText)">Add</button>
     </div>
 </template>
 
@@ -14,24 +14,33 @@ export default {
   methods:{
       handleAdd(todoText){
           this.todoText = ''
-          this.$store.commit('add', todoText)
+          this.$store.commit('ADD', todoText)
       },
 
   }
 }
 </script>
 <style>
-    .todoInput{
+    .todo__btn--add{
+        background-color: #008CBA !important;
+outline: none;
+        border: 0px;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 4px 12px !important
+    }
+    .todo__inputCol{
+        display: flex; gap:5px; justify-content:center
+    }
+    .todo__input{
         padding-left: 12px;
         border-radius: 6px;
         border: 1px solid gray;
         outline: none
     }
-    .todoInput:focus{
-        
-    }
-    .addBtn{
-        background-color: #008CBA;
+ 
+    .todo__addButton{
         outline: none;
         border: 0px;
         padding: 12px 18px 12px 18px;
@@ -39,10 +48,10 @@ export default {
         border-radius: 4px;
         cursor: pointer;
     }
-    .addBtn:hover{
+    .todo__addButton:hover{
         opacity: .8
     }
-    .addBtn:active{
+    .todo__addButton:active{
         opacity: 1
     }
 </style>

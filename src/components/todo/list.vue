@@ -1,15 +1,15 @@
 <template>
-    <div style="display:flex;justify-content:center;flex-direction:column; align-items:center;padding: 24px; gap:8px">
-        <div style="display:flex; justify-content:space-between; width:300px" v-for="(todo, index) in todos" :key="todo">
-            <div v-if="editingIndex!==index"  :style="{padding:'8px 4px 8px 4px', border:editingIndex===index?'1px solid black':'', width:'100%', textAlign:'left'}" >
+    <div class="todo__list-container">
+        <div class="todo__list" v-for="(todo, index) in todos" :key="todo">
+            <div v-if="editingIndex!==index" >
                 {{todo}}
             </div>
-            <input v-else v-model="temp" style="padding: 8px 4px 8px 4px"/>
-            <div style="display:flex; gap:12px">
-                <button class="deleteBtn" @click="deleteTodo(index)">
+            <input v-else v-model="temp"/>
+            <div class="todo__action-buttons">
+                <button class="todo__btn todo__btn--delete" @click="deleteTodo(index)">
                     delete
                 </button>
-                <button @click="handleModify(index)">
+                <button class="todo__btn todo__btn--modify" @click="handleModify(index)">
                     {{editingIndex===index?'Save':'edit'}}
                 </button>
             </div>
@@ -21,7 +21,9 @@ import { mapState } from 'vuex'
 export default {
     name: 'List',
     computed:{
-        ...mapState(['todos'])
+        ...mapState({
+            todos: state=>state.todo.todos
+        })
     },
     data:()=>({
         temp: '',
@@ -30,7 +32,7 @@ export default {
     methods:{
         handleModify(i){
             if(this.editingIndex !==-1){
-                this.$store.commit('update', {
+                this.$store.commit('UPDATE', {
                     i,
                     newState: this.temp
                 })
@@ -41,16 +43,42 @@ export default {
             }
         },
         deleteTodo(i){
-            this.$store.commit('delete', i)
+            this.$store.commit('DELETE', i)
         }
     }
 }
 </script>
 <style>
-.deleteBtn{
-    outline: none;
-    border: none;
+.todo__btn{
+    padding: 3px 6px;
+    background-color: white;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.todo__btn--delete{
     color:red;
-    cursor: pointer
+}
+
+.todo__action-buttons{
+    display:flex; gap:12px
+}
+.todo__istText{
+    padding: 8px 4px 8px 4px;
+    text-align: left;
+    width: 100%;
+}
+.todo__list{
+    display:flex; 
+    justify-content:space-between; 
+    width:300px
+}
+.todo__list-container{
+    display:flex;
+    justify-content:center;
+    flex-direction:column; 
+    align-items:center;
+    padding: 24px; 
+    gap:8px;
 }
 </style>
